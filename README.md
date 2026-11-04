@@ -17,7 +17,7 @@ A Three.js remake of [Bot Island](../bot-island/README.md), the live map of Boyd
 
 ## What's on the island
 * **Low-poly island.** Same outline formula and building layout as Bot Island (parsed from its `web/app.js`). It has flat-shaded terrain, a sand rim, animated water and decorative trees.
-* **Each bot's building is in its Bot Island color.** Colors come from the profile `color` plus Bot Island's palette. Shared buildings are striped with each resident's color. For example, the Schoolhouse is Char Tutor violet, Vic Tutor orange and Path gray.
+* **Each bot's building is in its Bot Island color.** Colors come from the profile `color` plus Bot Island's palette. Shared buildings are striped with each resident's color. For example, the Schoolhouse is Alex Tutor violet, Sam Tutor orange and Path gray.
   * 🏛️ HQ (Michael red, Orioles and Ravens flags)
   * 📚 Library (Jim blue)
   * 🔭 Observatory (Kelly yellow)
