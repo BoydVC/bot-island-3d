@@ -11,7 +11,7 @@ try {
   await b.goto(U + "?mode=replay&day=2026-09-11&hour=13.355&speed=60", 5000); await cam([4, 44, 58, 2, 0, -3]); await sleep(5000);
   await b.ev("window.__island.play(false)"); await shot("00-best-sep11-messages.png");
   await b.ev("document.querySelector('#labels').click()"); await sleep(1200); await shot("01-sep11-labels.png"); await b.ev("document.querySelector('#labels').click()");
-  await cam([-2, 22, 18, -3, 1, -12]); await sleep(1500); await hover("Vic Tutor", 0, 0); await shot("02-hover-label.png"); await b.mouse(5, 450);
+  await cam([-2, 22, 18, -3, 1, -12]); await sleep(1500); await hover("Sam Tutor", 0, 0); await shot("02-hover-label.png"); await b.mouse(5, 450);
   // 2) Sep 14 morning: Oscar's money check message to Michael
   await b.goto(U + "?mode=replay&day=2026-09-14&hour=8.73&speed=60", 5000); await sleep(4000); await b.ev("window.__island.play(false)"); await shot("03-sep14-morning.png");
   // 3) fuel tower close-up with hover
