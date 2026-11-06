@@ -212,7 +212,7 @@ function buildDay(day) {
       if (it.k === "visit") { const arr = moveTo(tr, it.t, visitSpot(it.to.building, b.id)); tr.trips.push({ s: it.t, e: arr, to: it.to }); const ret = { t: arr + DWELL, k: "go" }; let j = intents.findIndex((x) => x.t > ret.t); intents.splice(j < 0 ? intents.length : j, 0, ret); }
       else moveTo(tr, it.t, base(it.t + 1)); }
     tracks[b.id] = tr; }
-  // Boyd walks to whichever bot he messaged (real boyd_msg times), then home
+  // Alex walks to whichever bot he messaged (real boyd_msg times), then home
   const bt = { kf: [{ t: t0 - 1, p: boydSpot.clone() }], trips: [] }; const bi = evs.filter((e) => e.type === "boyd_msg" && byId[e.bot]).map((e) => ({ t: e.t, k: "visit", to: byId[e.bot] }));
   while (bi.length) { const it = bi.shift(); const tgt = posAt(tracks[it.to.id].kf, it.t).p.clone().add(new T.Vector3(1.3, 0, 1.0)); const arr = moveTo(bt, it.t, tgt); bt.trips.push({ s: it.t, e: arr, to: it.to }); const ret = { t: arr + 4 * MIN, k: "home" };
     if (!bi.length || bi[0].t > ret.t) moveTo(bt, ret.t, boydSpot); }
@@ -242,10 +242,10 @@ function plane(a, b, hex) { if (S.fx.length > 60) return; const m = new T.Mesh(p
 function label(e) { const app = e.app || ""; switch (e.type) {
   case "mcp_tool_call": return `${app}${e.tool ? " · " + e.tool.replace(/_/g, " ") : ""}`; case "shell_command": return "Shell command"; case "browser_navigation": return `Browsing ${e.host || "the web"}`;
   case "computer_use_session": return "Desktop (computer use)"; case "file_write": return `Wrote a ${e.ext || ""} file`; case "dated_output": return `${e.tool || "Output"}${e.approx ? " (time approx.)" : ""}`;
-  case "routine_touch": return "Routine ran"; case "agent_msg": return `✉️ message from ${byId[e.from] ? byId[e.from].name : "a bot"}`; case "boyd_msg": return "📱 chatting with Boyd"; default: return e.type; } }
+  case "routine_touch": return "Routine ran"; case "agent_msg": return `✉️ message from ${byId[e.from] ? byId[e.from].name : "a bot"}`; case "boyd_msg": return "📱 chatting with Alex"; default: return e.type; } }
 function wireItem(e) { const b = byId[e.bot]; return { t: e.t, hex: b ? b.hex : "#fff", text: e.type === "agent_msg" ? `${byId[e.from] ? byId[e.from].name : "?"} → ${b ? b.name : "?"} ✉️` : `${b ? b.name : "?"}: ${label(e)}` }; }
 let wireDirty = true, lastWire = 0;
-const TYPE_NAMES = { mcp_tool_call: "🔧 Tool calls", shell_command: "💻 Shell commands", browser_navigation: "🌐 Page visits", agent_msg: "✉️ Bot-to-bot messages", boyd_msg: "📱 Boyd → bot chats", computer_use_session: "🖥️ Desktop sessions", file_write: "📝 Files written", dated_output: "📰 Dated outputs", routine_touch: "⏰ Routine touches" };
+const TYPE_NAMES = { mcp_tool_call: "🔧 Tool calls", shell_command: "💻 Shell commands", browser_navigation: "🌐 Page visits", agent_msg: "✉️ Bot-to-bot messages", boyd_msg: "📱 Alex → bot chats", computer_use_session: "🖥️ Desktop sessions", file_write: "📝 Files written", dated_output: "📰 Dated outputs", routine_touch: "⏰ Routine touches" };
 function renderWire() { $("#wire").innerHTML = S.wire.slice(0, 40).map((w) => `<li><span class="t">${fmtTime(w.t)}</span><span class="dot" style="background:${w.hex}"></span><span>${esc(w.text)}</span></li>`).join("") || `<li><span class="sub">Nothing yet on ${fmtDayStr(DAY.day)}${S.mode === "live" ? " (local logs stop Sep 16; recent days only have dated outputs)" : ""}.</span></li>`;
   const keys = Object.keys(DAY.src).sort((a, b) => DAY.src[b] - DAY.src[a]); const tot = DAY.evs.length;
   $("#cnt-title").textContent = `${S.mode === "live" ? "Today so far" : "Replayed"} · ${fmtDayStr(DAY.day)}`;
@@ -293,10 +293,10 @@ function botState(b) { const tr = DAY.tracks[b.id], t = S.simT, q = posAt(tr.kf,
   if (q.walking) return "Walking home"; const h = etParts(t).h; return h >= 22 || h < 6 ? "Asleep at home 💤" : "Resting at home"; }
 function tipHtml(pk) { const t = S.simT, dayEv = DAY.evs.filter((e) => e.t <= t);
   if (pk.kind === "building") { const b = BLD[pk.key], rs = residents(pk.key); const busy = rs.filter((r) => DAY.tracks[r.id].sess.some((s) => t >= s.s && t < s.e));
-    return `<b>${b.emoji} ${esc(b.name)}</b>${rs.length ? `<div>${rs.map((r) => `<span style="color:${r.hex}">●</span> ${esc(r.name)}${busy.includes(r) ? " (working)" : ""}`).join("<br>")}</div>` : `<div class="s">${pk.key === "stadium" ? "Purple Stadium: Ravens, Orioles, Chelsea and Terps flags" : pk.key === "boyd" ? "Where Boyd lives" : "Town Square"}</div>`}`; }
+    return `<b>${b.emoji} ${esc(b.name)}</b>${rs.length ? `<div>${rs.map((r) => `<span style="color:${r.hex}">●</span> ${esc(r.name)}${busy.includes(r) ? " (working)" : ""}`).join("<br>")}</div>` : `<div class="s">${pk.key === "stadium" ? "Purple Stadium: Ravens, Orioles, Chelsea and Terps flags" : pk.key === "boyd" ? "Where Alex lives" : "Town Square"}</div>`}`; }
   if (pk.kind === "home") { const b = byId[pk.bot]; return `<b><span style="color:${b.hex}">●</span> ${esc(b.name)}'s house</b><div class="s">${esc(botState(b))}</div>`; }
   if (pk.kind === "bot") { const b = byId[pk.bot]; const n = dayEv.filter((e) => e.bot === b.id).length; return `<b>${b.emoji} ${esc(b.name)}</b> <span class="s">${esc(b.title || "")}</span><div>${esc(botState(b))}</div><div class="s">${n} event${n === 1 ? "" : "s"} so far on ${fmtDayStr(DAY.day)} · works at ${esc((BLD[b.building] || BLD.commons).name)}</div>`; }
-  if (pk.kind === "boyd") { const trip = DAY.boyd.trips.find((x) => t >= x.s && t < x.e + 4 * MIN); return `<b>🧑 Boyd</b> <span class="s">Ravens #8</span><div>${trip ? `Chatting with ${esc(trip.to.name)} 📱` : "At Boyd's Place"}</div>`; }
+  if (pk.kind === "boyd") { const trip = DAY.boyd.trips.find((x) => t >= x.s && t < x.e + 4 * MIN); return `<b>🧑 Alex</b> <span class="s">Ravens #8</span><div>${trip ? `Chatting with ${esc(trip.to.name)} 📱` : "At Alex's Place"}</div>`; }
   if (pk.kind === "fuel") { const f = fuelInfo(); return `<b>⛽ Fuel tower</b><div>${f.ok ? `${f.left}% fuel left (${f.used}% used)` : "usage.json unreadable"}</div><div class="s">${esc(f.label)}. Checked ${isNaN(f.checked) ? "?" : fmtTime(f.checked) + " ET"}. Resets ${f.exact ? "at" : "as early as"} ${isNaN(f.resetAt) ? "?" : fmtDay(f.resetAt) + ", " + fmtTime(f.resetAt) + " ET"}</div>`; }
   return ""; }
 // ---------- per-frame ----------

@@ -1,6 +1,6 @@
 # 🏝️ Bot Island 3D
 
-A Three.js remake of [Bot Island](../bot-island/README.md), the live map of Boyd's Grok Bot fleet. It's built from Bot Island's
+A Three.js remake of [Bot Island](../bot-island/README.md), the live map of Alex's Grok Bot fleet. It's built from Bot Island's
 **existing data files, read-only**, and nothing in `../bot-island` is modified.
 
 * **Open:** http://127.0.0.1:4261/. Port 4259 was already taken by *Fleet Doctor* (`../fleet-doctor`, started 6:02 PM ET), so `run.sh` falls back to 4261. If 4259 is free when you run it, it uses 4259.
@@ -33,11 +33,11 @@ A Three.js remake of [Bot Island](../bot-island/README.md), the live map of Boyd
   * 🚀 Launch Pad (TokenMax magenta)
   * 🏟️ Purple Stadium
   * ⛲ Town Square
-  * Boyd's Place
+  * Alex's Place
   * Every bot also has a house on the rim, alphabetical like the 2D map.
-* **Bot avatars** use each bot's real avatar shape (Jim's hex, Pam's tablet, TokenMax's sparkle, Michael's blob…) and color. Boyd is a purple #8.
+* **Bot avatars** use each bot's real avatar shape (Jim's hex, Pam's tablet, TokenMax's sparkle, Michael's blob…) and color. Alex is a purple #8.
   * **When a bot-to-bot message happens** (`agent_msg`), the sender walks from where it is to the recipient's building carrying an envelope, waits 2.5 minutes, and walks back. A paper airplane also flies the route.
-  * **When Boyd messages a bot** (`boyd_msg`), Boyd walks over to that bot.
+  * **When Alex messages a bot** (`boyd_msg`), Alex walks over to that bot.
   * **Work sessions** are clusters of a bot's real tool, shell, browser and file events (6-minute gap, same rule as 2D) plus its routine runs from `runs.json`. During a session the bot stands at its workplace with a glowing ring.
   * **Otherwise bots stay home,** and they sleep (z z) from 10 PM to 6 AM. There is **no invented wandering**: every movement comes from a real event or run.
 * **Day/night from the real ET clock.** The sun's position is computed for Baltimore (39.29°N, 76.61°W) from the time on screen: the real clock in Live mode, and the replayed clock in Replay. That gives real sunrise and sunset, dusk colors, stars, a moon, lit windows and the lighthouse beam.
@@ -47,7 +47,7 @@ A Three.js remake of [Bot Island](../bot-island/README.md), the live map of Boyd
   * The timeline histogram shows events per 10 minutes: blue for tools, pink for messages, green ticks for routine runs, and a yellow band for daylight. Drag it to scrub.
   * The **Replayed** card counts every event type as `fired / total for the day`.
   * The **Island wire** lists each event as it fires.
-* **Labels on hover** for buildings (who works there and who's busy), houses, bots (what they're doing right now, events so far), Boyd and the fuel tower. **🏷️ Labels** (`l`) pins all of them.
+* **Labels on hover** for buildings (who works there and who's busy), houses, bots (what they're doing right now, events so far), Alex and the fuel tower. **🏷️ Labels** (`l`) pins all of them.
 * **⛽ Fuel tower.** It reads `/workspace/tokenmax/usage.json`, and the glass column fills to `100 − used_pct`.
   * It currently shows **53% left (47% used)**, checked 6:00 PM ET.
   * Resets are shown "as early as" 00:00 UTC on `reset_date` (8:00 PM ET Oct 7), the same rule Bot Island uses, with a countdown.
@@ -96,6 +96,6 @@ URL options: `?mode=replay&day=2026-09-11&hour=13.3&speed=60`, `&play=0`, `&tour
 
 ---
 ## Repo notes
-- **Built:** Oct 2026 (TokenMax build week; see SHORTLIST/ledger), by TokenMax (Boyd's Grok Bot) on the Grok Bot box.
+- **Built:** Oct 2026 (TokenMax build week; see SHORTLIST/ledger), by TokenMax (Alex's Grok Bot) on the Grok Bot box.
 - **Run:** `./run.sh` (then open the localhost URL it prints).
 - Imported from `/workspace/tokenmax/bot-island-3d` on Oct 23, 2026. node_modules, virtualenvs, logs and files over 20 MB were left out.

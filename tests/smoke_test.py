@@ -47,7 +47,7 @@ if "--no-browser" not in sys.argv:
     try: O = json.loads(p.stdout.strip().splitlines()[-1])
     except Exception: O = {"crash": (p.stdout + p.stderr)[-600:]}
     check("headless render ran", "crash" not in O and O.get("ready"), O.get("crash", ""))
-    i = O.get("info", {}); check("scene built: 16 buildings, 16 homes, 17 avatars (16 bots + Boyd), WebGL", i.get("buildings") == 16 and i.get("homes") == 16 and i.get("avatars") == 17 and "WebGL" in str(i.get("gl")), i)
+    i = O.get("info", {}); check("scene built: 16 buildings, 16 homes, 17 avatars (16 bots + Alex), WebGL", i.get("buildings") == 16 and i.get("homes") == 16 and i.get("avatars") == 17 and "WebGL" in str(i.get("gl")), i)
     for d in days:
         s = O.get("days", {}).get(d, {}); exp = dict(by[d])
         check(f"replay {d}: played to end of day via playback", s.get("finished") and s.get("playbackOnly") and s.get("playbackFired") == sum(exp.values()), f'fired {s.get("playbackFired")} of {sum(exp.values())}')
